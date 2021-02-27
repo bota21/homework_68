@@ -1,14 +1,21 @@
-import { Card, CardText, CardBody, CardTitle } from "reactstrap";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import "./ShowInfo.css";
 
 const ShowInfo = (props) => {
   return (
     <Card>
-      <img className='card_img' src={props.img} alt={props.alt} />
-      <CardBody>
-        <CardTitle tag='h5'>{props.title}</CardTitle>
-        <CardText>{props.content}</CardText>
-      </CardBody>
+      <CardActionArea>
+        <img className='card_img' src={props.img} alt={props.alt} />
+        <CardContent>
+          <Typography>{props.title}</Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {props.content}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

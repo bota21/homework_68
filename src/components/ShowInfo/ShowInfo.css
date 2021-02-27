@@ -1,16 +1,15 @@
-.card {
-  flex-direction: row;
-  padding: 20px;
-}
-.card_img {
-  width: 210px;
-  height: auto;
-}
-.card-body {
+.MuiButtonBase-root.MuiCardActionArea-root {
   display: flex;
-  flex-direction: column;
+  padding: 20px;
   align-items: flex-start;
 }
-.card-text {
-  text-align: left;
+.MuiButtonBase-root.MuiCardActionArea-root .MuiCardContent-root {
+  padding: 0 16px 16px 16px;
+}
+.MuiTypography-root.MuiTypography-body1 {
+  text-align: start;
+  font-weight: 700;
+}
+.MuiTypography-root.MuiTypography-body2.MuiTypography-colorTextSecondary {
+  text-align: start;
 }
