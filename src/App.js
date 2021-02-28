@@ -1,4 +1,3 @@
-// import { Route } from 'react-router-dom';
 import "./App.css";
 import Page from "./containers/Page/Page";
 import ShowInfo from "./components/ShowInfo/ShowInfo";

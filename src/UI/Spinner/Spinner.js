@@ -1,57 +1,27 @@
 import React from "react";
-import PropTypes from "prop-types";
+import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import "./Spinner.css";
-import Backdrop from "../Backdrop/Backdrop";
+import { makeStyles } from "@material-ui/core/styles";
 
-const CircularProgressWithLabel = (props) => {
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
+
+export default function SimpleBackdrop() {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <>
-      <Backdrop />
-      <Box position='relative' display='inline-flex'>
-        <CircularProgress variant='determinate' {...props} />
-        <Box
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          position='absolute'
-          display='flex'
-          alignItems='center'
-          justifyContent='center'>
-          <Typography
-            variant='caption'
-            component='div'
-            color='textSecondary'>{`${Math.round(props.value)}%`}</Typography>
-        </Box>
-      </Box>
-    </>
+    <div>
+      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
+    </div>
   );
-};
-
-CircularProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate variant.
-   * Value between 0 and 100.
-   */
-  value: PropTypes.number.isRequired,
-};
-
-export default function CircularStatic() {
-  const [progress, setProgress] = React.useState(10);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 0 : prevProgress + 10
-      );
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  return <CircularProgressWithLabel value={progress} />;
 }

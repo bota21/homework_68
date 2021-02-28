@@ -8,15 +8,11 @@
   align-items: center;
   padding: 20px;
 }
-.MuiInputBase-root.MuiOutlinedInput-root.MuiAutocomplete-inputRoot.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd {
+.MuiFormControl-root.MuiTextField-root {
   width: 450px;
   margin-left: 20px;
 }
-.MuiFormLabel-root.MuiInputLabel-outlined {
-  transform: translate(37px, 20px) scale(1);
-  z-index: 1;
-  pointer-events: none;
-}
-.page_form .MuiInputLabel-outlined.MuiInputLabel-shrink {
-  transform: translate(34px, -6px) scale(0.75);
+.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary {
+  margin: 0 0 0 20px;
+  padding: 15px 0;
 }
