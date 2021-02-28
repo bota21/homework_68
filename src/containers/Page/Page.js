@@ -5,7 +5,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import AppBar from "@material-ui/core/AppBar";
 import { Button } from "@material-ui/core";
 import axios from "../../axiosTV";
-import Spinner from "../../UI/Spinner/Spinner";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import "./Page.css";
 
 const FETCH_REQUEST = "FETCH_REQUEST";
@@ -29,7 +29,7 @@ const reducer = (state, action) => {
     case FETCH_REQUEST_ERROR:
       return { ...state, error: action.error, loading: false };
     case SEND_REQUEST_SUCCESS:
-      return { ...state, movieSearch: action.data, loading: false };
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -52,15 +52,12 @@ const sendRequestSuccess = (data) => {
 const Page = () => {
   const [nameMovie, setNameMovie] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { movies, loading, movieSearch } = state;
+  const { movies, loading } = state;
 
   const searchShow = (e) => {
     let value = e.target.value;
     setNameMovie({ ...nameMovie, value });
   };
-  useEffect(() => {
-    console.log(nameMovie.value);
-  }, [nameMovie]);
 
   useEffect(() => {
     let newData = [];
@@ -81,7 +78,6 @@ const Page = () => {
     FetchData();
   }, [nameMovie]);
 
-  console.log(movieSearch);
   console.log(movies);
   const showMovie = async (e) => {
     e.preventDefault();
