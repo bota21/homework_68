@@ -9,10 +9,10 @@
   padding: 20px;
 }
 .MuiFormControl-root.MuiTextField-root {
-  width: 450px;
+  width: 500px;
   margin-left: 20px;
 }
-.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary {
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
   margin: 7px 0 0 20px;
   padding: 15px 0;
 }

@@ -78,7 +78,6 @@ const Page = () => {
     FetchData();
   }, [nameMovie]);
 
-  console.log(movies);
   const showMovie = async (e) => {
     e.preventDefault();
     dispatch(fetchRequest());
@@ -92,6 +91,7 @@ const Page = () => {
       dispatch(fetchRequestError(e));
     }
   };
+
   const history = useHistory();
   return (
     <>
@@ -117,7 +117,7 @@ const Page = () => {
             )}
           />
           <Button
-            variant='outlined'
+            variant='contained'
             color='primary'
             onClick={(e) => showMovie(e)}>
             Show

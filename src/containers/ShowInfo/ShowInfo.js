@@ -58,6 +58,13 @@ const ShowInfo = (props) => {
     fetchData();
   }, [id]);
 
+  let renderText = () => {
+    if (movie.summary) {
+      let text = movie.summary.replace(/<[^>]+>/g, "");
+      return text;
+    }
+  };
+
   return (
     <Card>
       {loading ? <Spinner /> : null}
@@ -77,7 +84,6 @@ const ShowInfo = (props) => {
           </Typography>
           {movie.rating !== undefined ? (
             <Typography variant='body2' color='textSecondary' component='p'>
-              {" "}
               rating: {movie.rating.average}
             </Typography>
           ) : null}
@@ -85,7 +91,7 @@ const ShowInfo = (props) => {
             status: {movie.status}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {movie.summary}
+            {renderText()}
           </Typography>
         </CardContent>
       </CardActionArea>
