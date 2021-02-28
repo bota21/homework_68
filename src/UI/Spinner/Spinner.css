@@ -1,0 +1,10 @@
+.MuiBox-root.MuiBox-root-1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+.MuiTypography-root.MuiTypography-caption.MuiTypography-colorTextSecondary {
+  color: #fff;
+}

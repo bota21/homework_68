@@ -1,11 +1,74 @@
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import AppBar from "@material-ui/core/AppBar";
+import { useEffect, useReducer } from "react";
+import axios from "../../axiosTV";
 import "./Page.css";
+import Spinner from '../../UI/Spinner/Spinner';
+import { useSelector } from "react-redux";
+
+const FETCH_REQUEST = "FETCH_REQUEST";
+const FETCH_REQUEST_SUCCESS = "FETCH_REQUEST_SUCCESS";
+const FETCH_REQUEST_ERROR = "FETCH_REQUEST_ERROR";
+
+const initialState = {
+  movies: [],
+  loading: false,
+  error: null,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case FETCH_REQUEST:
+      return { ...state, loading: true };
+    case FETCH_REQUEST_SUCCESS:
+      console.log(action.data);
+      return { ...state, movies: action.data, loading: false };
+    case FETCH_REQUEST_ERROR:
+      return { ...state, error: action.error, loading: false };
+    default:
+      return state;
+  }
+};
+
+const fetchRequest = () => {
+  return { type: FETCH_REQUEST };
+};
+const fetchRequestSuccess = (data) => {
+  return { type: FETCH_REQUEST_SUCCESS, data };
+};
+
+const fetchRequestError = (error) => {
+  return { type: FETCH_REQUEST_ERROR, error };
+};
+
+const fetchRequestMovie = () => {
+  return async (dispatch) => {
+    dispatch(fetchRequest());
+    try {
+      let response = await axios.get("?q=csi:vegas");
+      console.log(response.data);
+      dispatch(fetchRequestSuccess(response.data));
+    } catch (e) {
+      dispatch(fetchRequestError(e));
+    }
+  };
+};
 
 const Page = (props) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state);
+
+  const {movies, loading} = state;
+
+  useEffect(() => {
+      console.log('1');
+    dispatch(fetchRequestMovie());
+  }, [dispatch]);
+
   return (
     <>
+    {loading ? <Spinner/> : null}
       <AppBar>TV Shows</AppBar>
       <div className='page_form'>
         <label htmlFor='tv-show'>Search for TV Show: </label>
