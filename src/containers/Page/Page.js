@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -12,9 +12,11 @@ const FETCH_REQUEST = "FETCH_REQUEST";
 const FETCH_REQUEST_SUCCESS = "FETCH_REQUEST_SUCCESS";
 const FETCH_REQUEST_ERROR = "FETCH_REQUEST_ERROR";
 const SEND_REQUEST_SUCCESS = "SEND_REQUEST_SUCCESS";
+const CURRENT_VALUE = "CURRENT_VALUE";
 
 const initialState = {
   movies: [],
+  nameMovie: "",
   movieSearch: [],
   loading: false,
   error: null,
@@ -22,6 +24,8 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case CURRENT_VALUE:
+      return { ...state, nameMovie: action.value };
     case FETCH_REQUEST:
       return { ...state, loading: true };
     case FETCH_REQUEST_SUCCESS:
@@ -34,7 +38,9 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
+const inputValue = (value) => {
+  return { type: CURRENT_VALUE, value };
+};
 const fetchRequest = () => {
   return { type: FETCH_REQUEST };
 };
@@ -50,25 +56,23 @@ const sendRequestSuccess = (data) => {
 };
 
 const Page = () => {
-  const [nameMovie, setNameMovie] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { movies, loading } = state;
+  const { movies, loading, nameMovie } = state;
 
   const searchShow = (e) => {
-    let value = e.target.value;
-    setNameMovie({ ...nameMovie, value });
+    dispatch(inputValue(e.target.value));
   };
 
   useEffect(() => {
     let newData = [];
     const FetchData = async () => {
-      if (nameMovie.value !== undefined) {
+      if (nameMovie !== undefined) {
         dispatch(fetchRequest());
         try {
-          let response = await axios.get("?q=" + nameMovie.value);
+          let response = await axios.get("?q=" + nameMovie);
           response.data.map((item) => {
             newData.push(item.show.name);
-            dispatch(fetchRequestSuccess(newData));
+            return dispatch(fetchRequestSuccess(newData));
           });
         } catch (e) {
           dispatch(fetchRequestError(e));
@@ -82,9 +86,7 @@ const Page = () => {
     e.preventDefault();
     dispatch(fetchRequest());
     try {
-      console.log(movies[0]);
       let response = await axios.get("?q=" + movies[0]);
-      console.log(response.data[0].show);
       dispatch(sendRequestSuccess(response.data[0].show));
       return history.push("/shows/" + movies[0]);
     } catch (e) {

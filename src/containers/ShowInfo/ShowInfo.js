@@ -69,7 +69,7 @@ const ShowInfo = (props) => {
     <Card>
       {loading ? <Spinner /> : null}
       <CardActionArea>
-        {movie.image !== undefined ? (
+        {(movie.image !== undefined && movie.image !== null) ? (
           <img className='card_img' src={movie.image.medium} alt={movie.name} />
         ) : null}
         <CardContent>
